@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import FeedbackData from "./data/FeedbackData";
 import { v4 as uuidv4 } from "uuid";
 import About from "./components/views/About";
+import AboutActionLink from "./components/AboutActionLink";
 
 const App = () => {
   const [feedback, setFeedback] = useState(FeedbackData);
@@ -38,6 +39,7 @@ const App = () => {
                   handleDelete={deleteFeedback}
                   feedback={feedback}
                 />
+                <AboutActionLink />
               </>
             }
           />

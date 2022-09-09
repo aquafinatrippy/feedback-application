@@ -207,6 +207,17 @@ input:focus {
   margin-bottom: 20px;
 }
 
+.about {
+  a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    &:hover {
+      color: #ff6a95;
+    }
+  }
+}
+
 .about p {
   margin: 10px 0;
 }
