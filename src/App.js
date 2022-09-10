@@ -8,6 +8,7 @@ import FeedbackData from "./data/FeedbackData";
 import { v4 as uuidv4 } from "uuid";
 import About from "./components/views/About";
 import AboutActionLink from "./components/AboutActionLink";
+import { FeedbackProvider } from "./context/FeedbackContext";
 
 const App = () => {
   const [feedback, setFeedback] = useState(FeedbackData);
@@ -24,29 +25,28 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <Header text="Feedback Application" />
-      <div className="container">
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <>
-                <FeedbackForm handleAdd={addFeedback} />
-                <FeedbackStats feedback={feedback} />
-                <FeedbackList
-                  handleDelete={deleteFeedback}
-                  feedback={feedback}
-                />
-                <AboutActionLink />
-              </>
-            }
-          />
-          <Route element={<About />} path="/about" />
-        </Routes>
-      </div>
-    </Router>
+    <FeedbackProvider>
+      <Router>
+        <Header text="Feedback Application" />
+        <div className="container">
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <>
+                  <FeedbackForm handleAdd={addFeedback} />
+                  <FeedbackStats />
+                  <FeedbackList handleDelete={deleteFeedback} />
+                  <AboutActionLink />
+                </>
+              }
+            />
+            <Route element={<About />} path="/about" />
+          </Routes>
+        </div>
+      </Router>
+    </FeedbackProvider>
   );
 };
 export default App;
