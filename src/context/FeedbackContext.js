@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
 
 const FeedbackContext = createContext();
 
@@ -32,22 +31,27 @@ export const FeedbackProvider = ({ children }) => {
     }
   };
 
-  const deleteFeedback = (id) => {
+  const deleteFeedback = async (id) => {
     if (window.confirm("Are you sure?")) {
+      await axios.delete(`/feedback/${id}`);
       setFeedback(feedback.filter((item) => item.id !== id));
     }
   };
 
-  const addFeedback = (newFeedback) => {
-    newFeedback.id = uuidv4();
-    setFeedback([newFeedback, ...feedback]);
+  const addFeedback = async (newFeedback) => {
+    const res = await axios.post("/feedback", {
+      ...newFeedback,
+    });
+    setFeedback([res.data, ...feedback]);
   };
 
-  const editFeedback = (item) => {
+  const editFeedback = async (item) => {
+    await axios.patch(`/feedback/${item.id}`, { ...item });
     setFeedbackEdit({ item, edit: true });
   };
 
-  const updateFeedback = (id, updItem) => {
+  const updateFeedback = async (id, updItem) => {
+    await axios.put(`/feedback/${id}`, { ...updItem });
     setFeedback(
       feedback.map((item) => (item.id === id ? { item, ...updItem } : item))
     );
